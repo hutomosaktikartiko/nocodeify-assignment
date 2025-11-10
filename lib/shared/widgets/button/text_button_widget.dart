@@ -7,21 +7,23 @@ class TextButtonWidget extends ButtonWidget {
   final TextStyle? textStyle;
   final TextAlign? textAlign;
   final Color? textColor;
-  final Function()? onTap;
 
   TextButtonWidget({
     super.key,
+    super.onTap,
+    super.backgroundColor,
+    super.borderColor,
+    super.borderRadius,
+    super.padding,
     required this.text,
     this.textStyle,
     this.textAlign,
     this.textColor,
-    this.onTap,
   }) : super(
          child: Text(
            text,
            textAlign: textAlign,
            style: textStyle?.copyWith(color: textColor),
          ),
-         onTap: onTap,
        );
 }

@@ -7,6 +7,11 @@ class SidebarBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: child);
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        child: child,
+      ),
+    );
   }
 }

@@ -12,8 +12,12 @@ final appTheme = ThemeData(
     collapsedShape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
     iconColor: Colors.black,
   ),
-  tabBarTheme: TabBarThemeData(
-    labelColor: Colors.green,
-    unselectedLabelColor: Colors.grey,
+  dividerColor: Colors.grey.shade200,
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.green,
+      foregroundColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+    ),
   ),
 );

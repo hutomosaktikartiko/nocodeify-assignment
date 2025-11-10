@@ -36,12 +36,12 @@ class ButtonWidget extends StatelessWidget {
         style: ButtonStyle(
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
-              borderRadius: borderRadius ?? BorderRadius.circular(10),
+              borderRadius: borderRadius ?? BorderRadius.zero,
               side: _buildBorderSide,
             ),
           ),
           padding: WidgetStateProperty.all(padding ?? EdgeInsets.zero),
-          backgroundColor: WidgetStateProperty.all(_builBackgroundColor),
+          backgroundColor: _builBackgroundColor(context),
           elevation: WidgetStateProperty.all(elevattion ?? 0),
         ),
         child: _buildChild,
@@ -73,12 +73,16 @@ class ButtonWidget extends StatelessWidget {
     return child;
   }
 
-  Color? get _builBackgroundColor {
+  WidgetStateProperty<Color?>? _builBackgroundColor(BuildContext context) {
     if (isDisabled == true) {
-      return Colors.grey.withValues(alpha: 0.5);
+      return WidgetStateProperty.all(Colors.grey.withValues(alpha: 0.5));
     }
 
-    return backgroundColor;
+    if (backgroundColor != null) {
+      return WidgetStateProperty.all(backgroundColor);
+    }
+
+    return Theme.of(context).elevatedButtonTheme.style?.backgroundColor;
   }
 
   BorderSide get _buildBorderSide {
