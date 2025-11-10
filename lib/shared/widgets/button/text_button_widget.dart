@@ -7,6 +7,7 @@ class TextButtonWidget extends ButtonWidget {
   final TextStyle? textStyle;
   final TextAlign? textAlign;
   final Color? textColor;
+  final Function()? onTap;
 
   TextButtonWidget({
     super.key,
@@ -14,11 +15,13 @@ class TextButtonWidget extends ButtonWidget {
     this.textStyle,
     this.textAlign,
     this.textColor,
+    this.onTap,
   }) : super(
          child: Text(
            text,
            textAlign: textAlign,
            style: textStyle?.copyWith(color: textColor),
          ),
+         onTap: onTap,
        );
 }

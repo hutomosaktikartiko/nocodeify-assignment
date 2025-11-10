@@ -7,6 +7,7 @@ class IconButtonWidget extends ButtonWidget {
   final Color? iconColor;
   final double? iconSize;
   final TextDirection? direction;
+  final Function()? onTap;
 
   IconButtonWidget({
     super.key,
@@ -14,6 +15,7 @@ class IconButtonWidget extends ButtonWidget {
     this.iconColor,
     this.iconSize,
     this.direction,
+    this.onTap,
   }) : super(
          child: Icon(
            icon,
@@ -21,5 +23,6 @@ class IconButtonWidget extends ButtonWidget {
            size: iconSize,
            textDirection: direction,
          ),
+         onTap: onTap,
        );
 }

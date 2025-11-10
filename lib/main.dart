@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nocodeify_assignment/features/main/presentation/pages/main_page.dart';
+import 'package:nocodeify_assignment/core/constants/app_theme.dart';
 
-import 'features/chat/presentation/pages/chat_page.dart';
+import 'features/account/presentation/pages/account_facebook_page.dart';
+import 'features/account/presentation/pages/account_instagram_page.dart';
+import 'features/chat/presentation/pages/chat_all_page.dart';
+import 'features/chat/presentation/pages/chat_instagram_page.dart';
+import 'features/chat/presentation/pages/chat_sheel_page.dart';
 import 'features/dashboard/presentation/pages/dashboard_page.dart';
+import 'features/main/presentation/pages/main_shell_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(routerConfig: _router);
+    return MaterialApp.router(routerConfig: _router, theme: appTheme);
   }
 }
 
@@ -23,7 +28,7 @@ final _router = GoRouter(
   routes: [
     ShellRoute(
       builder: (context, state, child) {
-        return MainPage(child: child);
+        return MainShellPage(child: child);
       },
       routes: [
         GoRoute(
@@ -33,10 +38,35 @@ final _router = GoRouter(
           },
         ),
         GoRoute(
-          path: '/chat',
+          path: '/accounts/instagram',
           builder: (context, state) {
-            return const ChatPage();
+            return const AccountInstagramPage();
           },
+        ),
+        GoRoute(
+          path: '/accounts/facebook',
+          builder: (context, state) {
+            return const AccountFacebookPage();
+          },
+        ),
+        ShellRoute(
+          builder: (context, state, child) {
+            return ChatSheelPage(child: child);
+          },
+          routes: [
+            GoRoute(
+              path: '/chat/all',
+              builder: (context, state) {
+                return const ChatAllPage();
+              },
+            ),
+            GoRoute(
+              path: '/chat/instagram',
+              builder: (context, state) {
+                return const ChatInstagramPage();
+              },
+            ),
+          ],
         ),
       ],
     ),
