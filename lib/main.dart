@@ -1,7 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nocodeify_assignment/core/constants/app_theme.dart';
 
+import 'core/constants/app_theme.dart';
 import 'features/account/presentation/pages/account_facebook_page.dart';
 import 'features/account/presentation/pages/account_instagram_page.dart';
 import 'features/chat/presentation/pages/chat_all_page.dart';
@@ -19,7 +20,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(routerConfig: _router, theme: appTheme(context));
+    return MaterialApp.router(
+      routerConfig: _router,
+      theme: appTheme(context),
+      scrollBehavior: AppScrollBehavior(),
+    );
   }
 }
 
@@ -72,3 +77,13 @@ final _router = GoRouter(
     ),
   ],
 );
+
+class AppScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.trackpad,
+  };
+}

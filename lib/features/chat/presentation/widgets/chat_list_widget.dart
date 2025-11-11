@@ -25,60 +25,62 @@ class _ChatListWidgetState extends State<ChatListWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
         width: 300,
-        child: Column(
-          children: [
-            SearchFormWidget(
-              controller: _searchController,
-              hintText: 'Search',
-              onChanged: (value) {
-                widget.onSearchChat?.call(value);
-              },
-              onClear: () {
-                widget.onSearchChat?.call(null);
-              },
-            ),
-            const SizedBox(height: 10),
-            Row(
-              spacing: 10,
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      spacing: 8,
-                      children: [
-                        Chip(label: Text("Open Chats")),
-                        Chip(label: Text("Closed Chats")),
-                        Chip(label: Text("AI Paused")),
-                      ],
-                    ),
-                  ),
-                ),
-                Chip(label: Icon(Icons.filter_list)),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 20,
-                itemBuilder: (context, index) {
-                  return ChatItemWidget(
-                    name: "John Doe",
-                    lastMessage: "Message $index",
-                    lastMessageTime: DateTime.now().subtract(
-                      Duration(hours: index),
-                    ),
-                    unreadCount: 10,
-                    isSelected: false,
-                    onTap: () {},
-                  );
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Column(
+            spacing: 10,
+            children: [
+              SearchFormWidget(
+                controller: _searchController,
+                hintText: 'Search',
+                onChanged: (value) {
+                  widget.onSearchChat?.call(value);
+                },
+                onClear: () {
+                  widget.onSearchChat?.call(null);
                 },
               ),
-            ),
-          ],
+              Row(
+                spacing: 10,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        spacing: 8,
+                        children: [
+                          Chip(label: Text("Open Chats")),
+                          Chip(label: Text("Closed Chats")),
+                          Chip(label: Text("AI Paused")),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Chip(label: Icon(Icons.filter_list)),
+                ],
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 20,
+                  itemBuilder: (context, index) {
+                    return ChatItemWidget(
+                      name: "John Doe",
+                      lastMessage: "Message $index",
+                      lastMessageTime: DateTime.now().subtract(
+                        Duration(hours: index),
+                      ),
+                      unreadCount: 10,
+                      isSelected: false,
+                      onTap: () {},
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

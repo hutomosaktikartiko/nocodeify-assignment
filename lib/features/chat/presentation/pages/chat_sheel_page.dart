@@ -124,7 +124,6 @@ class _TabBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButtonWidget(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       text: text,
       backgroundColor: isSelected ? Colors.white : Colors.grey.shade100,
       borderColor: isSelected ? Colors.blue : Colors.grey.shade200,

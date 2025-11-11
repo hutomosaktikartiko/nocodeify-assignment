@@ -33,5 +33,6 @@ ThemeData appTheme(BuildContext context) {
       ).textTheme.bodySmall?.copyWith(color: Colors.black),
       labelPadding: EdgeInsets.zero,
     ),
+    dividerTheme: DividerThemeData(color: Colors.grey.shade200),
   );
 }

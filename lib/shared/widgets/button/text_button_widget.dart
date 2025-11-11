@@ -14,7 +14,6 @@ class TextButtonWidget extends ButtonWidget {
     super.backgroundColor,
     super.borderColor,
     super.borderRadius,
-    super.padding,
     required this.text,
     this.textStyle,
     this.textAlign,

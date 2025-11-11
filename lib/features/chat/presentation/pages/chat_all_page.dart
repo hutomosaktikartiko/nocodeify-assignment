@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/message_entity.dart';
+import '../widgets/chat_detail_widget.dart';
 import '../widgets/chat_list_widget.dart';
 
 class ChatAllPage extends StatelessWidget {
@@ -7,9 +9,15 @@ class ChatAllPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      body: Row(children: [ChatListWidget()]),
+      body: Row(
+        children: [
+          ChatListWidget(),
+          VerticalDivider(width: 0),
+          Expanded(child: ChatDetailWidget(messages: mockMessages)),
+        ],
+      ),
     );
   }
 }

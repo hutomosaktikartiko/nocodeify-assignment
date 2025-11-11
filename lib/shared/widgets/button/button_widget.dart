@@ -8,7 +8,6 @@ class ButtonWidget extends StatelessWidget {
   final bool? isLoading, isDisabled;
   final double? height, width;
   final BorderRadiusGeometry? borderRadius;
-  final EdgeInsetsGeometry? padding;
 
   const ButtonWidget({
     super.key,
@@ -23,7 +22,6 @@ class ButtonWidget extends StatelessWidget {
     this.height,
     this.width,
     this.borderRadius,
-    this.padding,
   });
 
   @override
@@ -40,7 +38,7 @@ class ButtonWidget extends StatelessWidget {
               side: _buildBorderSide,
             ),
           ),
-          padding: WidgetStateProperty.all(padding ?? EdgeInsets.zero),
+          padding: WidgetStateProperty.all(EdgeInsets.zero),
           backgroundColor: _builBackgroundColor(context),
           elevation: WidgetStateProperty.all(elevattion ?? 0),
         ),
