@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nocodeify_assignment/shared/widgets/button/text_button_widget.dart';
+
+import '../../../../shared/widgets/button/text_button_widget.dart';
 
 class ChatSheelPage extends StatefulWidget {
   final Widget child;

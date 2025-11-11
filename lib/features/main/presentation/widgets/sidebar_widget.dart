@@ -45,7 +45,7 @@ class SidebarWidget extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.chat),
-            title: const Text('Chat'),
+            title: const Text('Chats'),
             onTap: () => context.go('/chat/all'),
             selected: _isActive(context, '/chat'),
           ),
