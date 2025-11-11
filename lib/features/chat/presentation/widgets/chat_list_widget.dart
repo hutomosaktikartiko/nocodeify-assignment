@@ -6,12 +6,14 @@ import 'chat_item_widget.dart';
 
 class ChatListWidget extends StatefulWidget {
   final List<ChatRoom> chatRooms;
+  final ChatRoom? selectedChatRoom;
   final Function(String? query)? onSearchChat;
   final Function(ChatRoom chatRoom)? onSelectChat;
 
   const ChatListWidget({
     super.key,
     required this.chatRooms,
+    this.selectedChatRoom,
     this.onSearchChat,
     this.onSelectChat,
   });
@@ -75,11 +77,13 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                   itemCount: widget.chatRooms.length,
                   itemBuilder: (context, index) {
                     return ChatItemWidget(
-                      name: widget.chatRooms[index].name,
+                      name: widget.chatRooms[index].receiverName,
                       lastMessage: widget.chatRooms[index].lastMessage,
                       lastMessageTime: widget.chatRooms[index].lastMessageTime,
                       unreadCount: widget.chatRooms[index].unreadCount,
-                      isSelected: false,
+                      isSelected:
+                          widget.selectedChatRoom?.id ==
+                          widget.chatRooms[index].id,
                       onTap: () {
                         widget.onSelectChat?.call(widget.chatRooms[index]);
                       },

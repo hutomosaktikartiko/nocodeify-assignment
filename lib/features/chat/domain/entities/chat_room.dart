@@ -7,7 +7,8 @@ abstract class ChatRoom with _$ChatRoom {
   const ChatRoom._();
   const factory ChatRoom({
     required String id,
-    required String name,
+    required int receiverId,
+    required String receiverName,
     required String? lastMessage,
     required DateTime? lastMessageTime,
     required int unreadCount,

@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/chat_room_model.dart';
+import '../models/message_model.dart';
 
 abstract class ChatRemoteDataSource {
   Stream<List<ChatRoomModel>> streamChatRooms();
+  Stream<List<MessageModel>> streamMessages(String roomId);
 }
 
 class ChatRoomRemoteDataSourceImpl implements ChatRemoteDataSource {
@@ -83,6 +85,29 @@ class ChatRoomRemoteDataSourceImpl implements ChatRemoteDataSource {
       final chatList = [...chatListPov1, ...chatListPov2];
 
       return chatList;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Stream<List<MessageModel>> streamMessages(String roomId) {
+    try {
+      final stream = client
+          .from('messages')
+          .stream(primaryKey: ['id'])
+          .eq('room_id', roomId)
+          .order('created_at', ascending: true);
+
+      return stream.map((listOfMaps) {
+        return listOfMaps.map((json) {
+          try {
+            return MessageModel.fromJson(json);
+          } catch (e) {
+            rethrow;
+          }
+        }).toList();
+      });
     } catch (e) {
       rethrow;
     }

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatRoom {
 
- String get id; String get name; String? get lastMessage; DateTime? get lastMessageTime; int get unreadCount;
+ String get id; int get receiverId; String get receiverName; String? get lastMessage; DateTime? get lastMessageTime; int get unreadCount;
 /// Create a copy of ChatRoom
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ChatRoomCopyWith<ChatRoom> get copyWith => _$ChatRoomCopyWithImpl<ChatRoom>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatRoom&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.lastMessageTime, lastMessageTime) || other.lastMessageTime == lastMessageTime)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatRoom&&(identical(other.id, id) || other.id == id)&&(identical(other.receiverId, receiverId) || other.receiverId == receiverId)&&(identical(other.receiverName, receiverName) || other.receiverName == receiverName)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.lastMessageTime, lastMessageTime) || other.lastMessageTime == lastMessageTime)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,lastMessage,lastMessageTime,unreadCount);
+int get hashCode => Object.hash(runtimeType,id,receiverId,receiverName,lastMessage,lastMessageTime,unreadCount);
 
 @override
 String toString() {
-  return 'ChatRoom(id: $id, name: $name, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, unreadCount: $unreadCount)';
+  return 'ChatRoom(id: $id, receiverId: $receiverId, receiverName: $receiverName, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, unreadCount: $unreadCount)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ChatRoomCopyWith<$Res>  {
   factory $ChatRoomCopyWith(ChatRoom value, $Res Function(ChatRoom) _then) = _$ChatRoomCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? lastMessage, DateTime? lastMessageTime, int unreadCount
+ String id, int receiverId, String receiverName, String? lastMessage, DateTime? lastMessageTime, int unreadCount
 });
 
 
@@ -62,10 +62,11 @@ class _$ChatRoomCopyWithImpl<$Res>
 
 /// Create a copy of ChatRoom
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? lastMessage = freezed,Object? lastMessageTime = freezed,Object? unreadCount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? receiverId = null,Object? receiverName = null,Object? lastMessage = freezed,Object? lastMessageTime = freezed,Object? unreadCount = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,receiverId: null == receiverId ? _self.receiverId : receiverId // ignore: cast_nullable_to_non_nullable
+as int,receiverName: null == receiverName ? _self.receiverName : receiverName // ignore: cast_nullable_to_non_nullable
 as String,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
 as String?,lastMessageTime: freezed == lastMessageTime ? _self.lastMessageTime : lastMessageTime // ignore: cast_nullable_to_non_nullable
 as DateTime?,unreadCount: null == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? lastMessage,  DateTime? lastMessageTime,  int unreadCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  int receiverId,  String receiverName,  String? lastMessage,  DateTime? lastMessageTime,  int unreadCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatRoom() when $default != null:
-return $default(_that.id,_that.name,_that.lastMessage,_that.lastMessageTime,_that.unreadCount);case _:
+return $default(_that.id,_that.receiverId,_that.receiverName,_that.lastMessage,_that.lastMessageTime,_that.unreadCount);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.id,_that.name,_that.lastMessage,_that.lastMessageTime,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? lastMessage,  DateTime? lastMessageTime,  int unreadCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  int receiverId,  String receiverName,  String? lastMessage,  DateTime? lastMessageTime,  int unreadCount)  $default,) {final _that = this;
 switch (_that) {
 case _ChatRoom():
-return $default(_that.id,_that.name,_that.lastMessage,_that.lastMessageTime,_that.unreadCount);case _:
+return $default(_that.id,_that.receiverId,_that.receiverName,_that.lastMessage,_that.lastMessageTime,_that.unreadCount);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +196,10 @@ return $default(_that.id,_that.name,_that.lastMessage,_that.lastMessageTime,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? lastMessage,  DateTime? lastMessageTime,  int unreadCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  int receiverId,  String receiverName,  String? lastMessage,  DateTime? lastMessageTime,  int unreadCount)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatRoom() when $default != null:
-return $default(_that.id,_that.name,_that.lastMessage,_that.lastMessageTime,_that.unreadCount);case _:
+return $default(_that.id,_that.receiverId,_that.receiverName,_that.lastMessage,_that.lastMessageTime,_that.unreadCount);case _:
   return null;
 
 }
@@ -210,11 +211,12 @@ return $default(_that.id,_that.name,_that.lastMessage,_that.lastMessageTime,_tha
 
 
 class _ChatRoom extends ChatRoom {
-  const _ChatRoom({required this.id, required this.name, required this.lastMessage, required this.lastMessageTime, required this.unreadCount}): super._();
+  const _ChatRoom({required this.id, required this.receiverId, required this.receiverName, required this.lastMessage, required this.lastMessageTime, required this.unreadCount}): super._();
   
 
 @override final  String id;
-@override final  String name;
+@override final  int receiverId;
+@override final  String receiverName;
 @override final  String? lastMessage;
 @override final  DateTime? lastMessageTime;
 @override final  int unreadCount;
@@ -229,16 +231,16 @@ _$ChatRoomCopyWith<_ChatRoom> get copyWith => __$ChatRoomCopyWithImpl<_ChatRoom>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatRoom&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.lastMessageTime, lastMessageTime) || other.lastMessageTime == lastMessageTime)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatRoom&&(identical(other.id, id) || other.id == id)&&(identical(other.receiverId, receiverId) || other.receiverId == receiverId)&&(identical(other.receiverName, receiverName) || other.receiverName == receiverName)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.lastMessageTime, lastMessageTime) || other.lastMessageTime == lastMessageTime)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,lastMessage,lastMessageTime,unreadCount);
+int get hashCode => Object.hash(runtimeType,id,receiverId,receiverName,lastMessage,lastMessageTime,unreadCount);
 
 @override
 String toString() {
-  return 'ChatRoom(id: $id, name: $name, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, unreadCount: $unreadCount)';
+  return 'ChatRoom(id: $id, receiverId: $receiverId, receiverName: $receiverName, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, unreadCount: $unreadCount)';
 }
 
 
@@ -249,7 +251,7 @@ abstract mixin class _$ChatRoomCopyWith<$Res> implements $ChatRoomCopyWith<$Res>
   factory _$ChatRoomCopyWith(_ChatRoom value, $Res Function(_ChatRoom) _then) = __$ChatRoomCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? lastMessage, DateTime? lastMessageTime, int unreadCount
+ String id, int receiverId, String receiverName, String? lastMessage, DateTime? lastMessageTime, int unreadCount
 });
 
 
@@ -266,10 +268,11 @@ class __$ChatRoomCopyWithImpl<$Res>
 
 /// Create a copy of ChatRoom
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? lastMessage = freezed,Object? lastMessageTime = freezed,Object? unreadCount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? receiverId = null,Object? receiverName = null,Object? lastMessage = freezed,Object? lastMessageTime = freezed,Object? unreadCount = null,}) {
   return _then(_ChatRoom(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,receiverId: null == receiverId ? _self.receiverId : receiverId // ignore: cast_nullable_to_non_nullable
+as int,receiverName: null == receiverName ? _self.receiverName : receiverName // ignore: cast_nullable_to_non_nullable
 as String,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
 as String?,lastMessageTime: freezed == lastMessageTime ? _self.lastMessageTime : lastMessageTime // ignore: cast_nullable_to_non_nullable
 as DateTime?,unreadCount: null == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable

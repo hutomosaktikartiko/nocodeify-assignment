@@ -4,7 +4,9 @@ import 'data/datasources/chat_remote_data_source.dart';
 import 'data/repostories/chat_repository_impl.dart';
 import 'domain/repositories/chat_repository.dart';
 import 'domain/usecases/stream_chat_rooms.dart';
+import 'domain/usecases/stream_messages.dart';
 import 'presentation/bloc/chat_rooms/chat_rooms_bloc.dart';
+import 'presentation/bloc/messages/message_bloc.dart';
 
 void initChatFeature(GetIt sl) {
   // --- DATA SOURCE ---
@@ -21,7 +23,19 @@ void initChatFeature(GetIt sl) {
   sl.registerLazySingleton<StreamChatRooms>(
     () => StreamChatRooms(chatRepository: sl()),
   );
+  sl.registerLazySingleton<StreamMessages>(
+    () => StreamMessages(chatRepository: sl()),
+  );
 
   // --- BLOC ---
-  sl.registerFactory<ChatRoomsBloc>(() => ChatRoomsBloc(streamChatRooms: sl()));
+  sl.registerFactory<ChatRoomsBloc>(() {
+    return ChatRoomsBloc(streamChatRooms: sl());
+  });
+  sl.registerFactoryParam<MessageBloc, String, int>(
+    (String roomId, int currentUserId) => MessageBloc(
+      streamMessages: sl(),
+      roomId: roomId,
+      currentUserId: currentUserId,
+    ),
+  );
 }

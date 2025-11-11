@@ -9,7 +9,7 @@ part of 'chat_room_model.dart';
 _ChatRoomModel _$ChatRoomModelFromJson(Map<String, dynamic> json) =>
     _ChatRoomModel(
       roomId: json['room_id'] as String,
-      otherParticipantId: (json['other_participant_id'] as num?)?.toInt(),
+      otherParticipantId: (json['other_participant_id'] as num).toInt(),
       otherParticipantName: json['other_participant_name'] as String?,
       latestMessageContent: json['latest_message_content'] as String?,
       latestMessageTimestamp: json['latest_message_timestamp'] == null

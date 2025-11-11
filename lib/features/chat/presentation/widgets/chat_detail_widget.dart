@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../../shared/widgets/button/icon_button_widget.dart';
 import '../../../../shared/widgets/form/text_form_widget.dart';
 import '../../domain/entities/chat_room.dart';
-import '../../domain/entities/message_entity.dart';
+import '../../domain/entities/message.dart';
 import 'chat_bubble_widget.dart';
 
 class ChatDetailWidget extends StatefulWidget {
   final ChatRoom chatRoom;
-  final List<MessageEntity> messages;
+  final List<Message> messages;
 
   const ChatDetailWidget({
     super.key,
@@ -40,13 +40,17 @@ class _ChatDetailWidgetState extends State<ChatDetailWidget> {
           child: Row(
             spacing: 10,
             children: [
-              CircleAvatar(child: Text("A")),
+              CircleAvatar(
+                child: Text(
+                  widget.chatRoom.receiverName.substring(0, 1).toUpperCase(),
+                ),
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.chatRoom.name,
+                      widget.chatRoom.receiverName,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
@@ -80,8 +84,8 @@ class _ChatDetailWidgetState extends State<ChatDetailWidget> {
             itemBuilder: (context, index) {
               return ChatBubbleWidget(
                 isMe: widget.messages[index].isMe,
-                message: widget.messages[index].message,
-                time: widget.messages[index].time,
+                message: widget.messages[index].content,
+                time: widget.messages[index].createdAt,
               );
             },
           ),

@@ -31,7 +31,7 @@ class ChatItemWidget extends StatelessWidget {
         child: Row(
           spacing: 10,
           children: [
-            CircleAvatar(child: Text("A")),
+            CircleAvatar(child: Text(name.substring(0, 1).toUpperCase())),
             Expanded(
               child: Column(
                 spacing: 2,

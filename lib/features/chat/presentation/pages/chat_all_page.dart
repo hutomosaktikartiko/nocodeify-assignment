@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../injection_container.dart';
 import '../../../../shared/widgets/states/error_state_widget.dart';
 import '../../domain/entities/chat_room.dart';
-import '../../domain/entities/message_entity.dart';
 import '../bloc/chat_rooms/chat_rooms_bloc.dart';
+import '../bloc/messages/message_bloc.dart';
 import '../widgets/chat_detail_widget.dart';
 import '../widgets/chat_list_widget.dart';
 
@@ -49,9 +49,30 @@ class _ChatAllPageState extends State<ChatAllPage> {
                     VerticalDivider(width: 0),
                     if (_selectedChatRoom != null)
                       Expanded(
-                        child: ChatDetailWidget(
-                          chatRoom: _selectedChatRoom!,
-                          messages: mockMessages,
+                        child: BlocProvider(
+                          key: ValueKey(_selectedChatRoom!.receiverId),
+                          create: (context) {
+                            return sl<MessageBloc>(
+                              param1: _selectedChatRoom!.id,
+                              param2: _selectedChatRoom!.receiverId,
+                            )..add(const MessageEvent.streamStarted());
+                          },
+                          child: BlocBuilder<MessageBloc, MessageState>(
+                            builder: (context, state) {
+                              return state.when(
+                                initial: () => const SizedBox.shrink(),
+                                loading: () => const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                loaded: (messages) => ChatDetailWidget(
+                                  chatRoom: _selectedChatRoom!,
+                                  messages: messages,
+                                ),
+                                error: (error) =>
+                                    ErrorStateWidget(title: error),
+                              );
+                            },
+                          ),
                         ),
                       ),
                   ],
