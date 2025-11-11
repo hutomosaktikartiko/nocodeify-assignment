@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:nocodeify_assignment/shared/widgets/button/icon_button_widget.dart';
 
+import '../../../../shared/widgets/button/icon_button_widget.dart';
 import '../../../../shared/widgets/form/text_form_widget.dart';
+import '../../domain/entities/chat_room.dart';
 import '../../domain/entities/message_entity.dart';
 import 'chat_bubble_widget.dart';
 
 class ChatDetailWidget extends StatefulWidget {
+  final ChatRoom chatRoom;
   final List<MessageEntity> messages;
 
-  const ChatDetailWidget({super.key, required this.messages});
+  const ChatDetailWidget({
+    super.key,
+    required this.chatRoom,
+    required this.messages,
+  });
 
   @override
   State<ChatDetailWidget> createState() => _ChatDetailWidgetState();
@@ -40,7 +46,7 @@ class _ChatDetailWidgetState extends State<ChatDetailWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "John Doe",
+                      widget.chatRoom.name,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),

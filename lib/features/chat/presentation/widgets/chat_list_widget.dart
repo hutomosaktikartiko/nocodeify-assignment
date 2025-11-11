@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../../../../shared/widgets/form/search_form_widget.dart';
+import '../../domain/entities/chat_room.dart';
 import 'chat_item_widget.dart';
 
 class ChatListWidget extends StatefulWidget {
+  final List<ChatRoom> chatRooms;
   final Function(String? query)? onSearchChat;
+  final Function(ChatRoom chatRoom)? onSelectChat;
 
-  const ChatListWidget({super.key, this.onSearchChat});
+  const ChatListWidget({
+    super.key,
+    required this.chatRooms,
+    this.onSearchChat,
+    this.onSelectChat,
+  });
 
   @override
   State<ChatListWidget> createState() => _ChatListWidgetState();
@@ -64,17 +72,17 @@ class _ChatListWidgetState extends State<ChatListWidget> {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 20,
+                  itemCount: widget.chatRooms.length,
                   itemBuilder: (context, index) {
                     return ChatItemWidget(
-                      name: "John Doe",
-                      lastMessage: "Message $index",
-                      lastMessageTime: DateTime.now().subtract(
-                        Duration(hours: index),
-                      ),
-                      unreadCount: 10,
+                      name: widget.chatRooms[index].name,
+                      lastMessage: widget.chatRooms[index].lastMessage,
+                      lastMessageTime: widget.chatRooms[index].lastMessageTime,
+                      unreadCount: widget.chatRooms[index].unreadCount,
                       isSelected: false,
-                      onTap: () {},
+                      onTap: () {
+                        widget.onSelectChat?.call(widget.chatRooms[index]);
+                      },
                     );
                   },
                 ),

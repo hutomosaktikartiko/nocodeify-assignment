@@ -4,19 +4,19 @@ import 'package:timeago/timeago.dart';
 import 'unread_chat_count_widget.dart';
 
 class ChatItemWidget extends StatelessWidget {
-  final String? name;
+  final String name;
   final String? lastMessage;
   final DateTime? lastMessageTime;
-  final int? unreadCount;
+  final int unreadCount;
   final bool isSelected;
   final Function()? onTap;
 
   const ChatItemWidget({
     super.key,
-    this.name,
+    required this.name,
     this.lastMessage,
     this.lastMessageTime,
-    this.unreadCount,
+    required this.unreadCount,
     this.isSelected = false,
     this.onTap,
   });
@@ -42,7 +42,7 @@ class ChatItemWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          name ?? "",
+                          name,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(fontWeight: FontWeight.w600),
@@ -66,7 +66,8 @@ class ChatItemWidget extends StatelessWidget {
                               ?.copyWith(color: Colors.grey.shade500),
                         ),
                       ),
-                      if (unreadCount != null) UnreadChatCountWidget(count: 10),
+                      if (unreadCount > 0)
+                        UnreadChatCountWidget(count: unreadCount),
                     ],
                   ),
                 ],
