@@ -33,10 +33,17 @@ jobs:
 
       - run: flutter build web --release --base-href /
 
+      - name: Ensure redirects (optional)
+        run: |
+          if [ -f web/_redirects ]; then
+            cp web/_redirects build/web/_redirects
+          fi
+
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: nocodeify-assignment
           directory: build/web
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
