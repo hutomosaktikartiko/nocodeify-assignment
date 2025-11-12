@@ -14,6 +14,10 @@ abstract class ChatRemoteDataSource {
     required int receiverId,
     required String content,
   });
+  Future<void> markMessagesAsRead({
+    required String roomId,
+    required int currentUserId,
+  });
 }
 
 class ChatRoomRemoteDataSourceImpl implements ChatRemoteDataSource {
@@ -45,7 +49,7 @@ class ChatRoomRemoteDataSourceImpl implements ChatRemoteDataSource {
       _chatChannel = client
           .channel('public:messages')
           .onPostgresChanges(
-            event: PostgresChangeEvent.insert,
+            event: PostgresChangeEvent.all,
             schema: 'public',
             table: 'messages',
             callback: (payload) {
@@ -135,6 +139,21 @@ class ChatRoomRemoteDataSourceImpl implements ChatRemoteDataSource {
       };
 
       await client.from('messages').insert(messageData);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> markMessagesAsRead({
+    required String roomId,
+    required int currentUserId,
+  }) async {
+    try {
+      await client.rpc(
+        'mark_messages_as_read',
+        params: {'p_room_id': roomId, 'p_viewer_id': currentUserId},
+      );
     } catch (e) {
       rethrow;
     }

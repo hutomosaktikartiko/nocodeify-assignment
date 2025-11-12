@@ -55,12 +55,14 @@ class _ChatAllPageState extends State<ChatAllPage> {
                           key: ValueKey(_selectedChatRoom!.receiverId),
                           create: (context) {
                             return sl<MessageBloc>(
-                              param1: MessageBlocParams(
-                                roomId: _selectedChatRoom!.id,
-                                senderId: _selectedChatRoom!.senderId,
-                                receiverId: _selectedChatRoom!.receiverId,
-                              ),
-                            )..add(const MessageEvent.streamStarted());
+                                param1: MessageBlocParams(
+                                  roomId: _selectedChatRoom!.id,
+                                  senderId: _selectedChatRoom!.senderId,
+                                  receiverId: _selectedChatRoom!.receiverId,
+                                ),
+                              )
+                              ..add(const MessageEvent.streamStarted())
+                              ..add(const MessageEvent.markMessagesAsRead());
                           },
                           child: BlocConsumer<MessageBloc, MessageState>(
                             listener: (context, state) {

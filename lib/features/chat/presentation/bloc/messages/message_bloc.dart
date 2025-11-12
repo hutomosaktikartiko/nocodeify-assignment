@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/entities/message.dart';
+import '../../../domain/usecases/mark_messages_as_read.dart';
 import '../../../domain/usecases/send_message.dart';
 import '../../../domain/usecases/stream_messages.dart';
 
@@ -25,6 +26,7 @@ class MessageBlocParams {
 class MessageBloc extends Bloc<MessageEvent, MessageState> {
   final StreamMessages _streamMessages;
   final SendMessage _sendMessage;
+  final MarkMessagesAsRead _markMessagesAsRead;
 
   final String roomId;
   final int senderId;
@@ -33,15 +35,19 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   MessageBloc({
     required StreamMessages streamMessages,
     required SendMessage sendMessage,
+    required MarkMessagesAsRead markMessagesAsRead,
     required this.roomId,
     required this.senderId,
     required this.receiverId,
   }) : _streamMessages = streamMessages,
        _sendMessage = sendMessage,
+       _markMessagesAsRead = markMessagesAsRead,
        super(const MessageState.initial()) {
     on<_StreamStarted>(_onStreamStarted, transformer: restartable());
 
     on<_MessageSent>(_onMessageSent, transformer: restartable());
+
+    on<_MarkMessagesAsRead>(_onMarkMessagesAsRead, transformer: restartable());
   }
 
   Future<void> _onStreamStarted(
@@ -88,5 +94,17 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     emit(
       stateAfterSend.copyWith(isSending: false, sendError: error?.toString()),
     );
+  }
+
+  Future<void> _onMarkMessagesAsRead(
+    _MarkMessagesAsRead event,
+    Emitter<MessageState> emit,
+  ) async {
+    final params = MarkMessagesAsReadParams(
+      roomId: roomId,
+      currentUserId: senderId,
+    );
+
+    await _markMessagesAsRead.call(params);
   }
 }

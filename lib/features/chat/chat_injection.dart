@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'data/datasources/chat_remote_data_source.dart';
 import 'data/repostories/chat_repository_impl.dart';
 import 'domain/repositories/chat_repository.dart';
+import 'domain/usecases/mark_messages_as_read.dart';
 import 'domain/usecases/send_message.dart';
 import 'domain/usecases/stream_chat_rooms.dart';
 import 'domain/usecases/stream_messages.dart';
@@ -30,6 +31,9 @@ void initChatFeature(GetIt sl) {
   sl.registerLazySingleton<SendMessage>(
     () => SendMessage(chatRepository: sl()),
   );
+  sl.registerLazySingleton<MarkMessagesAsRead>(
+    () => MarkMessagesAsRead(chatRepository: sl()),
+  );
 
   // --- BLOC ---
   sl.registerFactory<ChatRoomsBloc>(() {
@@ -39,6 +43,7 @@ void initChatFeature(GetIt sl) {
     (params, _) => MessageBloc(
       streamMessages: sl(),
       sendMessage: sl(),
+      markMessagesAsRead: sl(),
       roomId: params.roomId,
       senderId: params.senderId,
       receiverId: params.receiverId,

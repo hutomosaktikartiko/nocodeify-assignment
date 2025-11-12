@@ -13,4 +13,8 @@ abstract class ChatRepository {
     required int receiverId,
     required String content,
   });
+  Future<(Object?, void)> markMessagesAsRead({
+    required String roomId,
+    required int currentUserId,
+  });
 }

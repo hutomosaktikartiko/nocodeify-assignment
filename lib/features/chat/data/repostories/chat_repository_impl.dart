@@ -71,4 +71,20 @@ class ChatRepositoryImpl implements ChatRepository {
       return (e, null);
     }
   }
+
+  @override
+  Future<(Object?, void)> markMessagesAsRead({
+    required String roomId,
+    required int currentUserId,
+  }) async {
+    try {
+      await chatRemoteDataSource.markMessagesAsRead(
+        roomId: roomId,
+        currentUserId: currentUserId,
+      );
+    } catch (e) {
+      return (e, null);
+    }
+    return (null, null);
+  }
 }

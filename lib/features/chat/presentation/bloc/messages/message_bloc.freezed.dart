@@ -55,12 +55,13 @@ extension MessageEventPatterns on MessageEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _StreamStarted value)?  streamStarted,TResult Function( _MessageSent value)?  messageSent,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _StreamStarted value)?  streamStarted,TResult Function( _MessageSent value)?  messageSent,TResult Function( _MarkMessagesAsRead value)?  markMessagesAsRead,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _StreamStarted() when streamStarted != null:
 return streamStarted(_that);case _MessageSent() when messageSent != null:
-return messageSent(_that);case _:
+return messageSent(_that);case _MarkMessagesAsRead() when markMessagesAsRead != null:
+return markMessagesAsRead(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return messageSent(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _StreamStarted value)  streamStarted,required TResult Function( _MessageSent value)  messageSent,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _StreamStarted value)  streamStarted,required TResult Function( _MessageSent value)  messageSent,required TResult Function( _MarkMessagesAsRead value)  markMessagesAsRead,}){
 final _that = this;
 switch (_that) {
 case _StreamStarted():
 return streamStarted(_that);case _MessageSent():
-return messageSent(_that);case _:
+return messageSent(_that);case _MarkMessagesAsRead():
+return markMessagesAsRead(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return messageSent(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _StreamStarted value)?  streamStarted,TResult? Function( _MessageSent value)?  messageSent,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _StreamStarted value)?  streamStarted,TResult? Function( _MessageSent value)?  messageSent,TResult? Function( _MarkMessagesAsRead value)?  markMessagesAsRead,}){
 final _that = this;
 switch (_that) {
 case _StreamStarted() when streamStarted != null:
 return streamStarted(_that);case _MessageSent() when messageSent != null:
-return messageSent(_that);case _:
+return messageSent(_that);case _MarkMessagesAsRead() when markMessagesAsRead != null:
+return markMessagesAsRead(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return messageSent(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  streamStarted,TResult Function( String content)?  messageSent,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  streamStarted,TResult Function( String content)?  messageSent,TResult Function()?  markMessagesAsRead,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StreamStarted() when streamStarted != null:
 return streamStarted();case _MessageSent() when messageSent != null:
-return messageSent(_that.content);case _:
+return messageSent(_that.content);case _MarkMessagesAsRead() when markMessagesAsRead != null:
+return markMessagesAsRead();case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return messageSent(_that.content);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  streamStarted,required TResult Function( String content)  messageSent,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  streamStarted,required TResult Function( String content)  messageSent,required TResult Function()  markMessagesAsRead,}) {final _that = this;
 switch (_that) {
 case _StreamStarted():
 return streamStarted();case _MessageSent():
-return messageSent(_that.content);case _:
+return messageSent(_that.content);case _MarkMessagesAsRead():
+return markMessagesAsRead();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return messageSent(_that.content);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  streamStarted,TResult? Function( String content)?  messageSent,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  streamStarted,TResult? Function( String content)?  messageSent,TResult? Function()?  markMessagesAsRead,}) {final _that = this;
 switch (_that) {
 case _StreamStarted() when streamStarted != null:
 return streamStarted();case _MessageSent() when messageSent != null:
-return messageSent(_that.content);case _:
+return messageSent(_that.content);case _MarkMessagesAsRead() when markMessagesAsRead != null:
+return markMessagesAsRead();case _:
   return null;
 
 }
@@ -274,6 +280,38 @@ as String,
 
 
 }
+
+/// @nodoc
+
+
+class _MarkMessagesAsRead implements MessageEvent {
+  const _MarkMessagesAsRead();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MarkMessagesAsRead);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'MessageEvent.markMessagesAsRead()';
+}
+
+
+}
+
+
+
 
 /// @nodoc
 mixin _$MessageState {
