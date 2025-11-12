@@ -3,9 +3,8 @@
 set -e
 
 echo "Installing FVM..."
-dart pub global activate fvm
-
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+curl -fsSL https://fvm.app/install.sh | bash
+export PATH="$PATH":"$HOME/.fvm/bin"
 
 echo "FVM version:"
 fvm --version
