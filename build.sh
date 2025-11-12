@@ -3,8 +3,8 @@
 set -e
 
 echo "Installing FVM..."
-curl -fsSL https://fvm.app/install.sh | bash
-export PATH="$PATH":"$HOME/.fvm/bin"
+curl -fsSL https://fvm.app/install.sh | bash -s -- --skip-setup
+export PATH="$PATH":"$HOME/.fvm_flutter/bin"
 
 echo "FVM version:"
 fvm --version
