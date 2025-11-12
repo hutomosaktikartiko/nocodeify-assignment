@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../injection_container.dart';
+import '../../../../shared/extensions/context/loading_context_extension.dart';
 import '../../../../shared/widgets/states/error_state_widget.dart';
 import '../../domain/entities/chat_room.dart';
 import '../bloc/chat_rooms/chat_rooms_bloc.dart';
@@ -40,6 +41,7 @@ class _ChatAllPageState extends State<ChatAllPage> {
                   children: [
                     ChatListWidget(
                       chatRooms: value,
+                      selectedChatRoom: _selectedChatRoom,
                       onSelectChat: (chatRoom) {
                         setState(() {
                           _selectedChatRoom = chatRoom;
@@ -53,21 +55,61 @@ class _ChatAllPageState extends State<ChatAllPage> {
                           key: ValueKey(_selectedChatRoom!.receiverId),
                           create: (context) {
                             return sl<MessageBloc>(
-                              param1: _selectedChatRoom!.id,
-                              param2: _selectedChatRoom!.receiverId,
+                              param1: MessageBlocParams(
+                                roomId: _selectedChatRoom!.id,
+                                senderId: _selectedChatRoom!.senderId,
+                                receiverId: _selectedChatRoom!.receiverId,
+                              ),
                             )..add(const MessageEvent.streamStarted());
                           },
-                          child: BlocBuilder<MessageBloc, MessageState>(
+                          child: BlocConsumer<MessageBloc, MessageState>(
+                            listener: (context, state) {
+                              state.maybeWhen(
+                                loaded: (messages, isSending, sendError) {
+                                  // hide loading
+                                  context.hideFullScreenLoading();
+
+                                  if (sendError != null) {
+                                    ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(
+                                        SnackBar(
+                                          content: Text(sendError),
+                                          backgroundColor: Theme.of(
+                                            context,
+                                          ).colorScheme.error,
+                                        ),
+                                      );
+                                  }
+                                },
+                                error: (error) {
+                                  // hide loading
+                                  context.hideFullScreenLoading();
+                                },
+                                orElse: () {},
+                              );
+                            },
                             builder: (context, state) {
                               return state.when(
                                 initial: () => const SizedBox.shrink(),
                                 loading: () => const Center(
                                   child: CircularProgressIndicator(),
                                 ),
-                                loaded: (messages) => ChatDetailWidget(
-                                  chatRoom: _selectedChatRoom!,
-                                  messages: messages,
-                                ),
+                                loaded: (messages, isSending, sendError) {
+                                  return ChatDetailWidget(
+                                    chatRoom: _selectedChatRoom!,
+                                    messages: messages,
+                                    onSendMessage: (message) {
+                                      // show loading
+                                      context.showFullScreenLoading();
+
+                                      // send message
+                                      context.read<MessageBloc>().add(
+                                        MessageEvent.messageSent(message),
+                                      );
+                                    },
+                                  );
+                                },
                                 error: (error) =>
                                     ErrorStateWidget(title: error),
                               );

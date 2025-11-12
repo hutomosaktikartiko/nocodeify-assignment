@@ -7,4 +7,10 @@ abstract class ChatRepository {
     required String roomId,
     required int currentUserId,
   });
+  Future<(Object?, void)> sendMessage({
+    required String roomId,
+    required int senderId,
+    required int receiverId,
+    required String content,
+  });
 }

@@ -8,6 +8,12 @@ import '../models/message_model.dart';
 abstract class ChatRemoteDataSource {
   Stream<List<ChatRoomModel>> streamChatRooms();
   Stream<List<MessageModel>> streamMessages(String roomId);
+  Future<void> sendMessage({
+    required String roomId,
+    required int senderId,
+    required int receiverId,
+    required String content,
+  });
 }
 
 class ChatRoomRemoteDataSourceImpl implements ChatRemoteDataSource {
@@ -108,6 +114,27 @@ class ChatRoomRemoteDataSourceImpl implements ChatRemoteDataSource {
           }
         }).toList();
       });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> sendMessage({
+    required String roomId,
+    required int senderId,
+    required int receiverId,
+    required String content,
+  }) async {
+    try {
+      final messageData = {
+        'room_id': roomId,
+        'sender_id': senderId,
+        'receiver_id': receiverId,
+        'content': content,
+      };
+
+      await client.from('messages').insert(messageData);
     } catch (e) {
       rethrow;
     }

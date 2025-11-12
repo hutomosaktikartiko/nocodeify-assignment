@@ -6,7 +6,11 @@ abstract class MessageState with _$MessageState {
 
   const factory MessageState.loading() = _Loading;
 
-  const factory MessageState.loaded(List<Message> messages) = _Loaded;
+  const factory MessageState.loaded(
+    List<Message> messages, {
+    @Default(false) bool isSending,
+    String? sendError,
+  }) = _Loaded;
 
   const factory MessageState.error(String message) = _Error;
 }

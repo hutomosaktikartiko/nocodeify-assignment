@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatRoomModel {
 
- String get roomId; int get otherParticipantId; String? get otherParticipantName; String? get latestMessageContent; DateTime? get latestMessageTimestamp; int? get unreadCount;
+ String get roomId; int get senderId; int get receiverId; String? get receiverName; String? get latestMessageContent; DateTime? get latestMessageTimestamp; int? get unreadCount;
 /// Create a copy of ChatRoomModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ChatRoomModelCopyWith<ChatRoomModel> get copyWith => _$ChatRoomModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatRoomModel&&(identical(other.roomId, roomId) || other.roomId == roomId)&&(identical(other.otherParticipantId, otherParticipantId) || other.otherParticipantId == otherParticipantId)&&(identical(other.otherParticipantName, otherParticipantName) || other.otherParticipantName == otherParticipantName)&&(identical(other.latestMessageContent, latestMessageContent) || other.latestMessageContent == latestMessageContent)&&(identical(other.latestMessageTimestamp, latestMessageTimestamp) || other.latestMessageTimestamp == latestMessageTimestamp)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatRoomModel&&(identical(other.roomId, roomId) || other.roomId == roomId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.receiverId, receiverId) || other.receiverId == receiverId)&&(identical(other.receiverName, receiverName) || other.receiverName == receiverName)&&(identical(other.latestMessageContent, latestMessageContent) || other.latestMessageContent == latestMessageContent)&&(identical(other.latestMessageTimestamp, latestMessageTimestamp) || other.latestMessageTimestamp == latestMessageTimestamp)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,roomId,otherParticipantId,otherParticipantName,latestMessageContent,latestMessageTimestamp,unreadCount);
+int get hashCode => Object.hash(runtimeType,roomId,senderId,receiverId,receiverName,latestMessageContent,latestMessageTimestamp,unreadCount);
 
 @override
 String toString() {
-  return 'ChatRoomModel(roomId: $roomId, otherParticipantId: $otherParticipantId, otherParticipantName: $otherParticipantName, latestMessageContent: $latestMessageContent, latestMessageTimestamp: $latestMessageTimestamp, unreadCount: $unreadCount)';
+  return 'ChatRoomModel(roomId: $roomId, senderId: $senderId, receiverId: $receiverId, receiverName: $receiverName, latestMessageContent: $latestMessageContent, latestMessageTimestamp: $latestMessageTimestamp, unreadCount: $unreadCount)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ChatRoomModelCopyWith<$Res>  {
   factory $ChatRoomModelCopyWith(ChatRoomModel value, $Res Function(ChatRoomModel) _then) = _$ChatRoomModelCopyWithImpl;
 @useResult
 $Res call({
- String roomId, int otherParticipantId, String? otherParticipantName, String? latestMessageContent, DateTime? latestMessageTimestamp, int? unreadCount
+ String roomId, int senderId, int receiverId, String? receiverName, String? latestMessageContent, DateTime? latestMessageTimestamp, int? unreadCount
 });
 
 
@@ -65,11 +65,12 @@ class _$ChatRoomModelCopyWithImpl<$Res>
 
 /// Create a copy of ChatRoomModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? roomId = null,Object? otherParticipantId = null,Object? otherParticipantName = freezed,Object? latestMessageContent = freezed,Object? latestMessageTimestamp = freezed,Object? unreadCount = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? roomId = null,Object? senderId = null,Object? receiverId = null,Object? receiverName = freezed,Object? latestMessageContent = freezed,Object? latestMessageTimestamp = freezed,Object? unreadCount = freezed,}) {
   return _then(_self.copyWith(
 roomId: null == roomId ? _self.roomId : roomId // ignore: cast_nullable_to_non_nullable
-as String,otherParticipantId: null == otherParticipantId ? _self.otherParticipantId : otherParticipantId // ignore: cast_nullable_to_non_nullable
-as int,otherParticipantName: freezed == otherParticipantName ? _self.otherParticipantName : otherParticipantName // ignore: cast_nullable_to_non_nullable
+as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
+as int,receiverId: null == receiverId ? _self.receiverId : receiverId // ignore: cast_nullable_to_non_nullable
+as int,receiverName: freezed == receiverName ? _self.receiverName : receiverName // ignore: cast_nullable_to_non_nullable
 as String?,latestMessageContent: freezed == latestMessageContent ? _self.latestMessageContent : latestMessageContent // ignore: cast_nullable_to_non_nullable
 as String?,latestMessageTimestamp: freezed == latestMessageTimestamp ? _self.latestMessageTimestamp : latestMessageTimestamp // ignore: cast_nullable_to_non_nullable
 as DateTime?,unreadCount: freezed == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String roomId,  int otherParticipantId,  String? otherParticipantName,  String? latestMessageContent,  DateTime? latestMessageTimestamp,  int? unreadCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String roomId,  int senderId,  int receiverId,  String? receiverName,  String? latestMessageContent,  DateTime? latestMessageTimestamp,  int? unreadCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatRoomModel() when $default != null:
-return $default(_that.roomId,_that.otherParticipantId,_that.otherParticipantName,_that.latestMessageContent,_that.latestMessageTimestamp,_that.unreadCount);case _:
+return $default(_that.roomId,_that.senderId,_that.receiverId,_that.receiverName,_that.latestMessageContent,_that.latestMessageTimestamp,_that.unreadCount);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.roomId,_that.otherParticipantId,_that.otherParticipantName
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String roomId,  int otherParticipantId,  String? otherParticipantName,  String? latestMessageContent,  DateTime? latestMessageTimestamp,  int? unreadCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String roomId,  int senderId,  int receiverId,  String? receiverName,  String? latestMessageContent,  DateTime? latestMessageTimestamp,  int? unreadCount)  $default,) {final _that = this;
 switch (_that) {
 case _ChatRoomModel():
-return $default(_that.roomId,_that.otherParticipantId,_that.otherParticipantName,_that.latestMessageContent,_that.latestMessageTimestamp,_that.unreadCount);case _:
+return $default(_that.roomId,_that.senderId,_that.receiverId,_that.receiverName,_that.latestMessageContent,_that.latestMessageTimestamp,_that.unreadCount);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +200,10 @@ return $default(_that.roomId,_that.otherParticipantId,_that.otherParticipantName
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String roomId,  int otherParticipantId,  String? otherParticipantName,  String? latestMessageContent,  DateTime? latestMessageTimestamp,  int? unreadCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String roomId,  int senderId,  int receiverId,  String? receiverName,  String? latestMessageContent,  DateTime? latestMessageTimestamp,  int? unreadCount)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatRoomModel() when $default != null:
-return $default(_that.roomId,_that.otherParticipantId,_that.otherParticipantName,_that.latestMessageContent,_that.latestMessageTimestamp,_that.unreadCount);case _:
+return $default(_that.roomId,_that.senderId,_that.receiverId,_that.receiverName,_that.latestMessageContent,_that.latestMessageTimestamp,_that.unreadCount);case _:
   return null;
 
 }
@@ -214,12 +215,13 @@ return $default(_that.roomId,_that.otherParticipantId,_that.otherParticipantName
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _ChatRoomModel extends ChatRoomModel {
-  const _ChatRoomModel({required this.roomId, required this.otherParticipantId, this.otherParticipantName, this.latestMessageContent, this.latestMessageTimestamp, this.unreadCount}): super._();
+  const _ChatRoomModel({required this.roomId, required this.senderId, required this.receiverId, this.receiverName, this.latestMessageContent, this.latestMessageTimestamp, this.unreadCount}): super._();
   factory _ChatRoomModel.fromJson(Map<String, dynamic> json) => _$ChatRoomModelFromJson(json);
 
 @override final  String roomId;
-@override final  int otherParticipantId;
-@override final  String? otherParticipantName;
+@override final  int senderId;
+@override final  int receiverId;
+@override final  String? receiverName;
 @override final  String? latestMessageContent;
 @override final  DateTime? latestMessageTimestamp;
 @override final  int? unreadCount;
@@ -237,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatRoomModel&&(identical(other.roomId, roomId) || other.roomId == roomId)&&(identical(other.otherParticipantId, otherParticipantId) || other.otherParticipantId == otherParticipantId)&&(identical(other.otherParticipantName, otherParticipantName) || other.otherParticipantName == otherParticipantName)&&(identical(other.latestMessageContent, latestMessageContent) || other.latestMessageContent == latestMessageContent)&&(identical(other.latestMessageTimestamp, latestMessageTimestamp) || other.latestMessageTimestamp == latestMessageTimestamp)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatRoomModel&&(identical(other.roomId, roomId) || other.roomId == roomId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.receiverId, receiverId) || other.receiverId == receiverId)&&(identical(other.receiverName, receiverName) || other.receiverName == receiverName)&&(identical(other.latestMessageContent, latestMessageContent) || other.latestMessageContent == latestMessageContent)&&(identical(other.latestMessageTimestamp, latestMessageTimestamp) || other.latestMessageTimestamp == latestMessageTimestamp)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,roomId,otherParticipantId,otherParticipantName,latestMessageContent,latestMessageTimestamp,unreadCount);
+int get hashCode => Object.hash(runtimeType,roomId,senderId,receiverId,receiverName,latestMessageContent,latestMessageTimestamp,unreadCount);
 
 @override
 String toString() {
-  return 'ChatRoomModel(roomId: $roomId, otherParticipantId: $otherParticipantId, otherParticipantName: $otherParticipantName, latestMessageContent: $latestMessageContent, latestMessageTimestamp: $latestMessageTimestamp, unreadCount: $unreadCount)';
+  return 'ChatRoomModel(roomId: $roomId, senderId: $senderId, receiverId: $receiverId, receiverName: $receiverName, latestMessageContent: $latestMessageContent, latestMessageTimestamp: $latestMessageTimestamp, unreadCount: $unreadCount)';
 }
 
 
@@ -257,7 +259,7 @@ abstract mixin class _$ChatRoomModelCopyWith<$Res> implements $ChatRoomModelCopy
   factory _$ChatRoomModelCopyWith(_ChatRoomModel value, $Res Function(_ChatRoomModel) _then) = __$ChatRoomModelCopyWithImpl;
 @override @useResult
 $Res call({
- String roomId, int otherParticipantId, String? otherParticipantName, String? latestMessageContent, DateTime? latestMessageTimestamp, int? unreadCount
+ String roomId, int senderId, int receiverId, String? receiverName, String? latestMessageContent, DateTime? latestMessageTimestamp, int? unreadCount
 });
 
 
@@ -274,11 +276,12 @@ class __$ChatRoomModelCopyWithImpl<$Res>
 
 /// Create a copy of ChatRoomModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? roomId = null,Object? otherParticipantId = null,Object? otherParticipantName = freezed,Object? latestMessageContent = freezed,Object? latestMessageTimestamp = freezed,Object? unreadCount = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? roomId = null,Object? senderId = null,Object? receiverId = null,Object? receiverName = freezed,Object? latestMessageContent = freezed,Object? latestMessageTimestamp = freezed,Object? unreadCount = freezed,}) {
   return _then(_ChatRoomModel(
 roomId: null == roomId ? _self.roomId : roomId // ignore: cast_nullable_to_non_nullable
-as String,otherParticipantId: null == otherParticipantId ? _self.otherParticipantId : otherParticipantId // ignore: cast_nullable_to_non_nullable
-as int,otherParticipantName: freezed == otherParticipantName ? _self.otherParticipantName : otherParticipantName // ignore: cast_nullable_to_non_nullable
+as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
+as int,receiverId: null == receiverId ? _self.receiverId : receiverId // ignore: cast_nullable_to_non_nullable
+as int,receiverName: freezed == receiverName ? _self.receiverName : receiverName // ignore: cast_nullable_to_non_nullable
 as String?,latestMessageContent: freezed == latestMessageContent ? _self.latestMessageContent : latestMessageContent // ignore: cast_nullable_to_non_nullable
 as String?,latestMessageTimestamp: freezed == latestMessageTimestamp ? _self.latestMessageTimestamp : latestMessageTimestamp // ignore: cast_nullable_to_non_nullable
 as DateTime?,unreadCount: freezed == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable

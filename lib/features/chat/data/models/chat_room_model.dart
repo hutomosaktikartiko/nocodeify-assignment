@@ -12,8 +12,9 @@ abstract class ChatRoomModel with _$ChatRoomModel {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory ChatRoomModel({
     required String roomId,
-    required int otherParticipantId,
-    String? otherParticipantName,
+    required int senderId,
+    required int receiverId,
+    String? receiverName,
     String? latestMessageContent,
     DateTime? latestMessageTimestamp,
     int? unreadCount,
@@ -24,8 +25,9 @@ abstract class ChatRoomModel with _$ChatRoomModel {
 
   ChatRoom toEntity() => ChatRoom(
     id: roomId,
-    receiverId: otherParticipantId,
-    receiverName: otherParticipantName ?? '',
+    senderId: senderId,
+    receiverId: receiverId,
+    receiverName: receiverName ?? '',
     lastMessage: latestMessageContent,
     lastMessageTime: latestMessageTimestamp,
     unreadCount: unreadCount ?? 0,

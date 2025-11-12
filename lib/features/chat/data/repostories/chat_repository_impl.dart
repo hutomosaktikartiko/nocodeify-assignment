@@ -50,4 +50,25 @@ class ChatRepositoryImpl implements ChatRepository {
       ),
     );
   }
+
+  @override
+  Future<(Object?, void)> sendMessage({
+    required String roomId,
+    required int senderId,
+    required int receiverId,
+    required String content,
+  }) async {
+    try {
+      await chatRemoteDataSource.sendMessage(
+        roomId: roomId,
+        senderId: senderId,
+        receiverId: receiverId,
+        content: content,
+      );
+
+      return (null, null);
+    } catch (e) {
+      return (e, null);
+    }
+  }
 }

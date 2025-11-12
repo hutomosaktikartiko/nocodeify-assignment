@@ -9,11 +9,13 @@ import 'chat_bubble_widget.dart';
 class ChatDetailWidget extends StatefulWidget {
   final ChatRoom chatRoom;
   final List<Message> messages;
+  final Function(String) onSendMessage;
 
   const ChatDetailWidget({
     super.key,
     required this.chatRoom,
     required this.messages,
+    required this.onSendMessage,
   });
 
   @override
@@ -76,7 +78,6 @@ class _ChatDetailWidgetState extends State<ChatDetailWidget> {
           child: ListView.separated(
             itemCount: widget.messages.length,
             padding: EdgeInsets.symmetric(horizontal: 14, vertical: 20),
-            reverse: true,
             physics: const ClampingScrollPhysics(),
             separatorBuilder: (context, index) {
               return const SizedBox(height: 14);
@@ -134,6 +135,11 @@ class _ChatDetailWidgetState extends State<ChatDetailWidget> {
                     // reload
                     setState(() {});
                   },
+                  onEditingComplete: () {
+                    widget.onSendMessage(_messageController.text);
+
+                    _messageController.clear();
+                  },
                 ),
               ),
               IconButtonWidget(
@@ -142,9 +148,11 @@ class _ChatDetailWidgetState extends State<ChatDetailWidget> {
                 height: 45,
                 width: 45,
                 borderRadius: BorderRadius.circular(8),
-                isDisabled: _messageController.text.isEmpty,
+                isDisabled: _messageController.text.trim().isEmpty,
                 onTap: () {
-                  // TODO: send message
+                  widget.onSendMessage(_messageController.text);
+
+                  _messageController.clear();
                 },
               ),
             ],

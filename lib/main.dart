@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -11,6 +12,8 @@ import 'features/chat/presentation/pages/chat_all_page.dart';
 import 'features/chat/presentation/pages/chat_instagram_page.dart';
 import 'features/chat/presentation/pages/chat_sheel_page.dart';
 import 'features/dashboard/presentation/pages/dashboard_page.dart';
+import 'features/loading/presentation/bloc/full_screen_loading_cubit.dart';
+import 'features/loading/presentation/pages/full_screen_loading_page.dart';
 import 'features/main/presentation/pages/main_shell_page.dart';
 import 'injection_container.dart' as di;
 
@@ -37,10 +40,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-      theme: appTheme(context),
-      scrollBehavior: AppScrollBehavior(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => di.sl<FullScreenLoadingCubit>()),
+      ],
+      child: MaterialApp.router(
+        routerConfig: _router,
+        theme: appTheme(context),
+        scrollBehavior: AppScrollBehavior(),
+        builder: (context, child) {
+          return Stack(
+            children: [
+              if (child != null) child,
+              BlocBuilder<FullScreenLoadingCubit, FullScreenLoadingState>(
+                builder: (context, state) {
+                  if (state is ShowFullScreenLoading) {
+                    return FullScreenLoadingPage(message: state.message);
+                  }
+
+                  return const SizedBox.shrink();
+                },
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

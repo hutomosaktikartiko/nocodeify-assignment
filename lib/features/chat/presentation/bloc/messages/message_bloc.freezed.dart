@@ -392,12 +392,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<Message> messages)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<Message> messages,  bool isSending,  String? sendError)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Loaded() when loaded != null:
-return loaded(_that.messages);case _Error() when error != null:
+return loaded(_that.messages,_that.isSending,_that.sendError);case _Error() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -416,12 +416,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<Message> messages)  loaded,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<Message> messages,  bool isSending,  String? sendError)  loaded,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading();case _Loaded():
-return loaded(_that.messages);case _Error():
+return loaded(_that.messages,_that.isSending,_that.sendError);case _Error():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -439,12 +439,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<Message> messages)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<Message> messages,  bool isSending,  String? sendError)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Loaded() when loaded != null:
-return loaded(_that.messages);case _Error() when error != null:
+return loaded(_that.messages,_that.isSending,_that.sendError);case _Error() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -521,7 +521,7 @@ String toString() {
 
 
 class _Loaded implements MessageState {
-  const _Loaded(final  List<Message> messages): _messages = messages;
+  const _Loaded(final  List<Message> messages, {this.isSending = false, this.sendError}): _messages = messages;
   
 
  final  List<Message> _messages;
@@ -531,6 +531,8 @@ class _Loaded implements MessageState {
   return EqualUnmodifiableListView(_messages);
 }
 
+@JsonKey() final  bool isSending;
+ final  String? sendError;
 
 /// Create a copy of MessageState
 /// with the given fields replaced by the non-null parameter values.
@@ -542,16 +544,16 @@ _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&const DeepCollectionEquality().equals(other._messages, _messages));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&const DeepCollectionEquality().equals(other._messages, _messages)&&(identical(other.isSending, isSending) || other.isSending == isSending)&&(identical(other.sendError, sendError) || other.sendError == sendError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_messages));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_messages),isSending,sendError);
 
 @override
 String toString() {
-  return 'MessageState.loaded(messages: $messages)';
+  return 'MessageState.loaded(messages: $messages, isSending: $isSending, sendError: $sendError)';
 }
 
 
@@ -562,7 +564,7 @@ abstract mixin class _$LoadedCopyWith<$Res> implements $MessageStateCopyWith<$Re
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @useResult
 $Res call({
- List<Message> messages
+ List<Message> messages, bool isSending, String? sendError
 });
 
 
@@ -579,10 +581,12 @@ class __$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of MessageState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? messages = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? messages = null,Object? isSending = null,Object? sendError = freezed,}) {
   return _then(_Loaded(
 null == messages ? _self._messages : messages // ignore: cast_nullable_to_non_nullable
-as List<Message>,
+as List<Message>,isSending: null == isSending ? _self.isSending : isSending // ignore: cast_nullable_to_non_nullable
+as bool,sendError: freezed == sendError ? _self.sendError : sendError // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'features/chat/chat_injection.dart';
+import 'features/loading/loading_injection.dart';
 
 final sl = GetIt.instance;
 
@@ -11,4 +12,5 @@ Future<void> init() async {
 
   // --- FEATURES ---
   initChatFeature(sl);
+  initLoadingFeature(sl);
 }

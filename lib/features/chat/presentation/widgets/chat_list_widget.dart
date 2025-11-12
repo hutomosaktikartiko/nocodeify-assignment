@@ -13,7 +13,7 @@ class ChatListWidget extends StatefulWidget {
   const ChatListWidget({
     super.key,
     required this.chatRooms,
-    this.selectedChatRoom,
+    required this.selectedChatRoom,
     this.onSearchChat,
     this.onSelectChat,
   });
@@ -83,7 +83,9 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                       unreadCount: widget.chatRooms[index].unreadCount,
                       isSelected:
                           widget.selectedChatRoom?.id ==
-                          widget.chatRooms[index].id,
+                              widget.chatRooms[index].id &&
+                          widget.selectedChatRoom?.senderId ==
+                              widget.chatRooms[index].senderId,
                       onTap: () {
                         widget.onSelectChat?.call(widget.chatRooms[index]);
                       },
