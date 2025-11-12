@@ -22,6 +22,15 @@ jobs:
 
       - run: flutter --version
       - run: flutter pub get
+
+      - name: Create .env from secrets
+        shell: bash
+        run: |
+          cat > .env << 'EOF'
+          SUPABASE_URL=${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+          EOF
+
       - run: flutter build web --release --base-href /
 
       - name: Deploy to Cloudflare Pages
